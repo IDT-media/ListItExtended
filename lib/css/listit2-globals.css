@@ -1,0 +1,21 @@
+/* Backend */
+div.listit2-admin-wrapper a{
+
+	outline: none;
+}
+
+/* ajax loaders */
+.ajax-loader-type-16 {
+
+	width: 16px;
+	height: 16px;
+	background: url(../../images/jqueryui/ui-anim_basic_16x16.gif) no-repeat;
+}
+
+.ajax-loader-type-wide {
+
+	margin-top: 15px;
+	width: 128px;
+	height: 15px;
+	background: url(../../images/moduleui/ajax-loader-wide.gif) no-repeat;
+}

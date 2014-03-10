@@ -1,0 +1,185 @@
+<h3>Version 1.4.1</h3>
+<ul>
+    <li>Adding new action: archive.</li>
+    <li>Introducing new param style.</li>
+    <li>Implementing item cache.</li>
+    <li>Adding possibility to overwrite admin templates in instance context, overwrite order: module_custom -> instance -> framework.</li>
+    <li>Fixes issue with $return_link and $return_url variables. Now correctly returns to proper default action. PrettyURL support enabled. Removing $return_href variable.</li>
+    <li>Adding size property for MultiSelect and Categories fields.</li>
+    <li>Adding filter_month and filter_year.</li>
+    <li>Reserving namespace ListIt2. Adding IDT class. Help section partially on remote content now with caching. Adding namespace support to internal autoloader.</li>
+    <li>Adding missing integration columns key1-3 to CategoryOperations save process.</li>
+    <li>Active category object is assigned to smarty in all frontend actions, instead of default action only.</li>
+    <li>Hooking module to ContentPostCompile event. With option allows autoscan based on content compilation. Makes moving site to client location easier. Might cause performance peak, so use with caution. Partial solution to FR#9810</li>
+    <li>Adding failsafe text to mod description field.</li>
+    <li>Removed GetItemById() and GetItemByAlias() methods from API</li>
+    <li>Category $category->depth automatically calculated into object. Reduces template logic.</li>
+	<li>ListIt2Loader no longer attemts to grab default instance from template but handles it internally, so cases where CGSmartImage caused collapse aint possible anymore.</li>
+	<li>All fatal errors handled with exceptions. CMSMS catches all ListIt2Exceptions and throws em to CMSMS error console. Tried to make more friendly and infomative messages to exceptions.</li>
+	<li>Removed tablesorter and quicksearch jQuery plugins, replaced with footable plugin, better table handling for mobile devices and small screens.</li>
+    <li>Adding FR#9780. You can hide alias with in admin listing. New adming listing element: modified_time.</li>
+    <li>Fixes BR#9352. File Upload field definitions, 'Delete' checkbox needs label.</li>
+    <li>Fixes BR#9763. ListIt2Loader unable to get category by alias.</li>
+    <li>Fixes BR#9362. Max length attribute for custom fields of type text is not active.</li>
+    <li>Fixes BR#9434. Type Categories required has a -- none -- option under articles.</li>
+    <li>Fixes BR#9426. Items hidden in admin when expiration date passes.</li>
+    <li>Fixes BR#9656. Field value exceeds max length (Date).</li>
+    <li>Fixes BR#9350. Field definitions, selecting 'Required' and clicking apply bug.</li>
+</ul>
+
+<h3>Version 1.4</h3>
+<ul>
+    <li>Fixes upgrade via MoMa hanging whole admin. Moved duplicator methods from upgrade script to event.</li>
+    <li>Update to default templates, removed accordion and categorized.</li>
+    <li>Adming pagination now maintains current page, when jumping in and out of items.</li>
+    <li>Fixes issue where isset() and empty() didnt work agains field shorthand.</li>
+    <li>Adding permissions: Remove items, Approve items, Modify all items.</li>
+    <li>Increasing performance and reducing queries and memory usage alot in general.</li>
+    <li>Adding several new preferences.</li>
+    <li>Adding new param: summarypage.</li>
+    <li>Introducing interal Event Handler in FielddefBase.</li>
+    <li>Adding new Fielddef Type: FileUpload.</li>
+    <li>Adding new FielddefBase method IsUnique.</li>
+    <li>Categories written into fielddef. Adding this field will reveal category options, else all category related is hidden.</li>
+    <li>Adding new smarty plugin: ListIt2Loader. Makes possible to load single or multiple items or categories from anywhere in CMSMS with multiple criteras.</li>
+    <li>Dropping deprecated smarty assigns. Dropping $uploads_url assign, use {uploads_url} plugin instead, included in core.</li>
+    <li>Adding FR#8902. Order by start and end date.</li>
+    <li>Adding FR#8367. Group Permissions - Approve item for Frontend Display.</li>
+    <li>Adding FR#8151. Add copy item action.</li>
+    <li>Fixes BR#8454. Pagination with search function and page limit.</li>
+    <li>Fixes BR#8853. Text areas have to have 'Max lenght'.</li>
+    <li>Fixes BR#9123. Actions: "category" missing in help and "filter" deprecated ?</li>
+    <li>Fixes BR#9124. Category parameter in a summarytemplate generates unusable links to item.</li>
+    <li>Fixes BR#9138. English language corrections.</li>
+    <li>Fixes BR#9182. Categories->sub-categories and pretty url.</li>
+    <li>Fixes BR#9187. Variables not available to detail template.</li>
+</ul>
+
+<h3>Version 1.4-beta2</h3>
+<ul>
+    <li>Internal release.</li>
+</ul>
+
+<h3>Version 1.4-beta1</h3>
+<ul>
+    <li>Adding category operation classes: ListIt2CategoryOperations, ListIt2Category</li>
+    <li>Adding query classes: ListIt2Query, ListIt2ItemQuery, ListIt2CategoryQuery</li>
+    <li>Adding hierarchy classes: ListIt2HierarchyManager</li>
+    <li>Adding event: PreRenderAction. Making query injections possible with UDT.</li>
+    <li>Adding database integration columns: key1, key2, key3. Makes integrations with external systems possible.</li>
+    <li>Adding behavior to load items and categories with more than one critera.</li>
+    <li>Adding action: category. Makes category listing possible various of ways.</li>
+    <li>Adding Two new category templates, one for normal view and one for hierarchial.</li>
+    <li>Categories are no longer mandatory for items.</li>
+    <li>Values no longer saved into database in serialized format. Using value_indexes for value fragments.</li>
+    <li>Support for PHP 5.2 dropped. Minimum required version is 5.3.</li>
+    <li>Several new parameters available.</li>
+    <li>Adding FR#6733. Include Item in multiple categories.</li>	
+    <li>Adding FR#8260. Disable categories.</li>	
+    <li>Adding FR#8813. Separate GetAdminDescription.</li>	
+    <li>Adding FR#8850. Allow "Content Pages" to be presented as a multi-select.</li>	
+    <li>Adding FR#8968. Save the "last modified" date of each item.</li>	
+    <li>Adding FR#8969. Datepicker fields in admin lists.</li>
+    <li>Fixes BR#8178. Category hierarchies and reordering doesn't work correctly.</li>	
+    <li>Fixes BR#8290. Reorder Categories Hangs Browser.</li>	
+    <li>Fixes BR#8853. Text areas have to have 'Max lenght'.</li>	
+</ul>
+
+<h3>Version 1.3.2</h3>
+<ul>
+    <li>Fixes BR#8822. Fixes issue with field values, when directly upgrading from 1.2.x series.</li>
+    <li>Fixes issue when using orderby='custom_alias'.</li>
+    <li>FR #8813. Added and option of changing Module Description for each Instance</li>
+</ul>
+
+<h3>Version 1.3.1</h3>
+<ul>
+    <li>Fixes BR#8779. Upgrade time outs on MoMa upgrade request. Manual field scan required after upgrade.</li>
+    <li>Fixes BR#8780. Unidentified index warning on ListIt2XDefs installation, when auto install setting is on.</li>
+    <li>Adding methods GetHeaderHTML() and GetURLPath() to FielddefBase.</li>
+    <li>Adding Select DateTime field.</li>
+    <li>Adding Slider field.</li>
+    <li>Removing Select Date field.</li>
+    <li>Restoring partial PHP 5.2.x support. This will be last release supporting PHP 5.2.x.</li>
+    <li>Fixes UTF-8 decode/encode problem with import/export.</li>
+    <li>Making multivalues possible. Data stored into database as string AND serialized format. Possible to call value as string, array, object.</li>
+    <li>Adding Multi Select field.</li>
+    <li>Adding Checkbox Group field.</li>	
+    <li>Fixes BR#8812. Base module permission tied to: Modify Site Preferences. Thanks to cb2004.</li>	
+    <li>Fixes BR#8819. Asterisk added back to field labels. Thanks to cb2004.</li>	
+</ul>
+
+<h3>Version 1.3</h3>
+<ul>
+    <li>Removed duplicating instructions from module files, no longer valid but someone could be a smartass and follow instructions anyway.</li>
+    <li>Separating framework and instance stuff. Mother module independent, without any instance on it.</li>
+    <li>Removing parameter: number, use: pagelimit instead.</li>
+    <li>Added option of showing "date created" in Item edit mode (FR #8338)</li>
+    <li>Added options of showing create_time, start_time and end_time in Items overview table</li>
+    <li>Save current item and create new (FR #8254)</li>
+    <li>Complete rewrite of field definitions</li>
+    <li>Complete rewrite of item classes</li>
+    <li>Fixes BR#8229. Not throwing notice on upgrade</li>
+    <li>Fixes BR#8339. Not throwing deprecated warning anymore.</li>
+    <li>Fixes BR#8391. Impossible to leave certain options empty.</li>
+    <li>Fixes BR#8392. Won't collapse with Gallery CSS anymore.</li>
+    <li>Fixes BR#8406. Assets getting correct prefix.</li>
+    <li>Fixes BR#8565. Fixes problem with GBFilePicker field definition.</li>
+    <li>Fixes BR#8593. Same as BR#8339.</li>
+    <li>Adding FR#8645. Possible to show items up to 1000.</li>
+    <li>Adding simple CSV import/export system.</li>
+    <li>Adding AJAX to most of small actions. ie. toggle, delete.</li>
+    <li>Adding many other things we forgot to list here...</li>
+</ul>
+
+<h3>Version 1.2.2</h3>
+<ul>
+    <li>Fixes BR#8270. maintains orderby positions correctly.</li>
+    <li>Fixes BR#8264. Static search works now correctly.</li>
+    <li>Mergin actions filter and search to action search. Action filter template tables removed. Search action loading fieddefs only if requested by template</li>
+    <li>Removing $hidden smarty variable from templates, part of controller now.</li>
+    <li>Adding own class for item. Possible to call fielddef value with alias directly from object: $item->alias, instead of item->fielddefs.alias.value. Old way works also.</li>
+    <li>Adding support for {cge_module_hint}. Usage and instructions in CGExtensions.</li>
+    <li>Adding FR#8179. pretty url support to pagination.</li>
+    <li>Adding FR#8180. see CGExtensions help for {cge_module_hint}.</li>
+    <li>Fixes BR#8262. Typos in language files.</li>
+    <li>Fixes problem with inline mode.</li>
+    <li>Adding FR#8168. pagination for items in back-end.</li>
+    <li>Field definitions now removable even if items have values on em.</li>
+    <li>Disabling reorder category button, until we get it working properly.</li>
+    <li>Removing debug templates. Adding parameter: debug. Possible to view template and debug info at the same time now.</li>
+</ul>
+
+<h3>Version 1.2.1</h3>
+<ul>
+    <li>Fixing bug with GBFilePicker.</li>
+    <li>Minor adjustments.</li>
+    <li>Moving changelog to static file.</li>
+</ul>
+
+<h3>Version 1.2</h3>
+<ul>
+    <li>Complete rewrite of Template handling, using CMSMS templates table now</li>
+    <li>Additional Filed definitions</li>
+    <li>Removed GBFilePicker dependency</li>
+    <li>CMSMS 1.11 ready</li>
+    <li>Improved handling of items ordering</li>
+    <li>Added possibility of duplicating multiple instances from backend and reduced the number of files needed for duplicated instances</li>
+    <li>Numbered pagination in summary templates</li>
+    <li>Numerous bugfixes</li>
+    <li>Possibility to specify defualt category</li>
+    <li>Possibility to specify default Templates</li>
+    <li>Possibility to reload default templates</li>
+    <li>Added option of choosing Admin Section</li>
+    <li>and more ...</li>
+</ul>
+
+<h3>Version 1.1</h3>
+<ul>
+    <li>Mulitlevel Categories</li>
+    <li>Summary Pagination</li>
+    <li>Multiple Categories for parameter category</li>
+    <li>CMSMS 1.10 ready</li>
+    <li>Backend table search</li>
+    <li>Exclude Category parameter</li>
+</ul>

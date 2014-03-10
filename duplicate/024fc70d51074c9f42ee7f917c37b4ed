@@ -1,0 +1,540 @@
+<?php
+#-------------------------------------------------------------------------
+#
+# Author: Ben Malen, <ben@conceptfactory.com.au>
+# Co-Maintainer: Simon Radford, <simon@conceptfactory.com.au>
+# Web: www.conceptfactory.com.au
+#
+#-------------------------------------------------------------------------
+#
+# Maintainer since 2011: Jonathan Schmid, <hi@jonathanschmid.de>
+# Web: www.jonathanschmid.de
+#
+#-------------------------------------------------------------------------
+#
+# Some wackos started destroying stuff since 2012: 
+#
+# Tapio L�ytty, <tapsa@orange-media.fi>
+# Web: www.orange-media.fi
+#
+# Goran Ilic, <uniqu3e@gmail.com>
+# Web: www.ich-mach-das.at
+#
+#-------------------------------------------------------------------------
+#
+# ListIt is a CMS Made Simple module that enables the web developer to create
+# multiple lists throughout a site. It can be duplicated and given friendly
+# names for easier client maintenance.
+#
+#-------------------------------------------------------------------------
+
+class 024fc70d51074c9f42ee7f917c37b4ed extends ListIt2
+{
+	#---------------------
+	# Magic methods
+	#---------------------		
+	
+	public function __construct()
+	{	
+		parent::__construct();
+	}
+
+	#---------------------
+	# Module api methods
+	#---------------------		
+
+	public function GetName()
+	{
+		return get_class($this);
+	}
+	
+	public function GetFriendlyName()
+	{
+		return $this->GetPreference('friendlyname');
+	}
+	
+    public function GetAdminDescription()
+    {
+        return $this->GetPreference('moddescription', $this->ModLang('moddescription'));
+    } 	
+
+	public function GetAdminSection()
+	{
+		return $this->GetPreference('adminsection');
+	}	
+
+	public function AllowAutoUpgrade()
+	{
+		return FALSE;
+	}
+
+	public function GetDependencies()
+	{
+		return array('ListIt2' => '1.4.1');
+	}
+	
+	public function VisibleToAdminUser()
+	{
+		return $this->CheckPermission($this->_GetModuleAlias() . '_modify_item');
+	}
+	
+	public function IsPluginModule()
+	{
+		return true;
+	}	
+
+	public function LazyLoadFrontend() 
+	{
+		return false;
+	}
+	
+	public function SubPackage()
+	{
+		return FALSE;
+	}	
+
+	public function GetHelp()
+	{
+		$smarty = cmsms()->GetSmarty();
+		$config = cmsms()->GetConfig();
+
+		$smarty->assign('parent_name', parent::GetName());		
+		$smarty->assign('root_url', $config['root_url']);
+		$smarty->assign('idt_module_help', ListIt2\IDT::getModuleHelp());
+
+		$smarty->assign('mod', $this);
+
+		$smarty->assign('usage_text', str_replace('{$module_name}', $this->GetName(), $this->ModLang('help_usage')));
+		$smarty->assign('permissions_text', str_replace('{$module_name}', $this->GetName(), $this->ModLang('help_permissions')));
+		$smarty->assign('templates_text', str_replace('{$module_name}', $this->GetName(), $this->ModLang('help_templates')));
+		$smarty->assign('duplicating_text', str_replace('{$module_name}', $this->GetName(), $this->ModLang('help_duplicating')));
+
+		return $this->ModProcessTemplate('help.tpl');
+	}	
+	
+	public function InitializeFrontend()
+	{
+		$this->RegisterModulePlugin();
+		$this->RestrictUnknownParams();
+	
+		// Set allowed parameters
+		$this->SetParameterType('action', CLEAN_STRING);
+		$this->SetParameterType('showall', CLEAN_INT);
+		$this->SetParameterType('category', CLEAN_STRING);
+		$this->SetParameterType('exclude_category', CLEAN_STRING);
+		$this->SetParameterType('subcategory', CLEAN_INT);		
+		$this->SetParameterType('orderby', CLEAN_STRING);		
+		$this->SetParameterType('detailtemplate', CLEAN_STRING);
+		$this->SetParameterType('summarytemplate', CLEAN_STRING);
+		$this->SetParameterType('searchtemplate', CLEAN_STRING);
+		$this->SetParameterType('categorytemplate', CLEAN_STRING);
+		$this->SetParameterType('archivetemplate', CLEAN_STRING);
+		$this->SetParameterType(CLEAN_REGEXP.'/template_.*/',CLEAN_STRING);
+		$this->SetParameterType('detailpage', CLEAN_STRING);
+		$this->SetParameterType('summarypage', CLEAN_STRING);
+		$this->SetParameterType('item', CLEAN_STRING);
+		$this->SetParameterType('id_hierarchy', CLEAN_STRING);		
+		$this->SetParameterType('pagelimit',CLEAN_INT);
+		$this->SetParameterType('start',CLEAN_INT);
+		$this->SetParameterType('pagenumber',CLEAN_INT);
+		$this->SetParameterType('search', CLEAN_STRING);
+		$this->SetParameterType(CLEAN_REGEXP.'/search_.*/',CLEAN_STRING);
+		$this->SetParameterType('filter', CLEAN_STRING);
+		$this->SetParameterType(CLEAN_REGEXP.'/filter_.*/',CLEAN_STRING);
+		$this->SetParameterType('debug', CLEAN_INT);
+		$this->SetParameterType('collapse', CLEAN_INT);
+		$this->SetParameterType('show_items', CLEAN_INT);
+		$this->SetParameterType('number_of_levels', CLEAN_INT);
+		$this->SetParameterType('include_items', CLEAN_STRING);
+		$this->SetParameterType('exclude_items', CLEAN_STRING);
+		
+		// Get summarypage
+		$summarypage = $this->GetPreference('summarypage', null);
+		if(is_null($summarypage)) {
+		
+			if(!isset($contentops))
+				$contentops = cmsms()->GetContentOperations();
+				
+			$summarypage = $contentops->GetDefaultPageID();
+		}
+		
+		// Get detailpage
+		$detailpage = $this->GetPreference('detailpage', null);
+		if(is_null($detailpage)) {
+		
+			if(!isset($contentops))
+				$contentops = cmsms()->GetContentOperations();
+			
+			$detailpage = $contentops->GetDefaultPageID();
+		}
+		
+		// Get subcategory
+		$subcategory = $this->GetPreference('subcategory');
+
+		// Archive
+		$this->RegisterRoute('/'.$this->prefix.'\/archive\/(?P<filter_year>[0-9]+?)\/(?P<filter_month>[0-9]+?)\/(?P<returnid>[0-9]+)$/', array('action' => 'default'));
+		//$this->RegisterRoute('/'.$this->prefix.'\/archive\/(?P<filter_year>[0-9]+?)\/(?P<filter_month>[0-9]+?)$/', array('action' => 'default', 'returnid' => $summarypage));
+		$this->RegisterRoute('/'.$this->prefix.'\/archive\/(?P<filter_year>[0-9]+?)\/(?P<returnid>[0-9]+)$/', array('action' => 'default'));
+		//$this->RegisterRoute('/'.$this->prefix.'\/archive\/(?P<filter_year>[0-9]+?)$/', array('action' => 'default', 'returnid' => $summarypage));
+		
+		// Pagination
+		$this->RegisterRoute('/'.$this->prefix.'\/page\/(?P<pagenumber>[0-9]+?)\/(?P<pagelimit>[0-9]+)\/(?P<returnid>[0-9]+)$/', array('action' => 'default'));
+		$this->RegisterRoute('/'.$this->prefix.'\/page\/(?P<pagenumber>[0-9]+?)\/(?P<returnid>[0-9]+)$/', array('action' => 'default'));
+		
+		// Hierarchy view		
+		$this->RegisterRoute('/'.$this->prefix.'\/(?P<category>.+?)\/(?P<id_hierarchy>[0-9.]+)\/(?P<item>.+?)\/(?P<returnid>[0-9]+)$/', array('action' => 'detail'));
+		$this->RegisterRoute('/'.$this->prefix.'\/(?P<category>.+?)\/(?P<id_hierarchy>[0-9.]+)\/(?P<returnid>[0-9]+)$/', array('action' => 'default', 'subcategory' => $subcategory));	
+		
+		// Singular		
+		$this->RegisterRoute('/'.$this->prefix.'\/(?P<item>.+?)\/(?P<returnid>[0-9]+)\/(?P<detailtemplate>.+?)$/', array('action' => 'detail'));
+		//$this->RegisterRoute('/'.$this->prefix.'\/(?P<item>.+?)\/(?P<detailtemplate>[a-zA-Z_-]+?)$/', array('action' => 'detail', 'returnid' => $detailpage));
+		$this->RegisterRoute('/'.$this->prefix.'\/(?P<item>.+?)\/(?P<returnid>[0-9]+)$/', array('action' => 'detail'));	
+		//$this->RegisterRoute('/'.$this->prefix.'\/(?P<item>.+?)$/', array('action' => 'detail', 'returnid' => $detailpage));	
+	}
+	
+	public function InitializeAdmin()
+	{
+		// parameters that can be called in the module tag
+		$this->CreateParameter('action', 'default', $this->ModLang('help_param_action'));		
+		$this->CreateParameter('orderby', 'item_position', $this->ModLang('help_param_orderby'));
+		$this->CreateParameter('showall', '0', $this->ModLang('help_param_showall'));
+		$this->CreateParameter('category', 'general', $this->ModLang('help_param_category'));
+		$this->CreateParameter('exclude_category', '', $this->ModLang('help_param_exclude_category'));			
+		$this->CreateParameter('subcategory', 'false', $this->ModLang('help_param_subcategory'));
+		$this->CreateParameter('detailpage', '', $this->ModLang('help_param_detailpage'));
+		$this->CreateParameter('summarypage', '', $this->ModLang('help_param_summarypage'));
+		$this->CreateParameter('item', 'alias', $this->ModLang('help_param_item'));
+		$this->CreateParameter('pagelimit', 100000, $this->ModLang('help_param_pagelimit'));
+		$this->CreateParameter('start', 0, $this->ModLang('help_param_start'));
+		$this->CreateParameter('search', '', $this->ModLang('help_param_search'));
+		$this->CreateParameter('serach_*','',$this->ModLang('help_param_search_'));
+		$this->CreateParameter('filter','','<strong>Deprecated</strong> - ' . $this->ModLang('help_param_filter'));
+		$this->CreateParameter('debug', 'false', $this->ModLang('help_param_debug'));
+		$this->CreateParameter('collapse', 'false', $this->ModLang('help_param_collapse'));		
+		$this->CreateParameter('show_items', 'false', $this->ModLang('help_param_show_items'));		
+		$this->CreateParameter('number_of_levels', '', $this->ModLang('help_param_number_of_levels'));				
+		$this->CreateParameter('include_items', '', $this->ModLang('help_param_include_items'));		
+		$this->CreateParameter('exclude_items', '', $this->ModLang('help_param_exclude_items'));		
+		
+		// parameters that can be called in the module tag
+		/*$this->CreateParameter('action', 'default', $this->ModLang('help_param_action'));	
+		$this->CreateParameter('orderby', 'item_position', $this->ModLang('help_param_orderby'));		
+		$this->CreateParameter('detailpage', '', $this->ModLang('help_param_detailpage'));
+		$this->CreateParameter('summarypage', '', $this->ModLang('help_param_summarypage'));
+		$this->CreateParameter('item', 'alias', $this->ModLang('help_param_item'));
+		$this->CreateParameter('pagelimit', 100000, $this->ModLang('help_param_pagelimit'));
+		$this->CreateParameter('start', 0, $this->ModLang('help_param_start'));		
+		$this->CreateParameter('collapse', 'false', $this->ModLang('help_param_collapse'));		
+		$this->CreateParameter('show_items', 'false', $this->ModLang('help_param_show_items'));		
+		$this->CreateParameter('number_of_levels', '', $this->ModLang('help_param_number_of_levels'));				
+		$this->CreateParameter('filter','',$this->ModLang('help_param_filter'));
+		$this->CreateParameter('debug', 'false', $this->ModLang('help_param_debug'));*/
+		
+		// Templates
+		$this->CreateParameter('template_detail', 'default', $this->ModLang('help_param_detailtemplate'));
+		$this->CreateParameter('template_summary', 'default', $this->ModLang('help_param_summarytemplate'));
+		$this->CreateParameter('template_search', 'default', $this->ModLang('help_param_searchtemplate'));
+		$this->CreateParameter('template_category', 'default', $this->ModLang('help_param_categorytemplate'));
+		$this->CreateParameter('template_archive', 'default', $this->ModLang('help_param_categorytemplate'));
+		
+		// SQL filters	
+		$this->CreateParameter('filter_year', '', $this->ModLang('help_param_year'));		
+		$this->CreateParameter('filter_month', '', $this->ModLang('help_param_month'));
+		/*$this->CreateParameter('filter_incategory', '', $this->ModLang('help_param_category'));
+		$this->CreateParameter('filter_excategory', '', $this->ModLang('help_param_exclude_category'));	
+		$this->CreateParameter('filter_incitems', '', $this->ModLang('help_param_include_items'));		
+		$this->CreateParameter('filter_excitems', '', $this->ModLang('help_param_exclude_items'));
+		$this->CreateParameter('filter_search', '', $this->ModLang('help_param_search'));		
+		$this->CreateParameter('filter_showall', '0', $this->ModLang('help_param_showall'));
+		$this->CreateParameter('filter_subcategory', 'false', $this->ModLang('help_param_subcategory'));*/
+	}	
+	
+    public function GetHeaderHTML()
+    {
+		// SSL check (Hopefully core would do this soon...)
+		$use_ssl = false;
+		if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on')
+			$use_ssl = true;
+	
+        $config = cmsms()->GetConfig();
+        $modulename = $this->GetName();
+		$moduledir = $this->GetParentURLPath($use_ssl);
+		$globals_js = ($use_ssl?$config['ssl_url']:$config['root_url']). '/modules/'. LISTIT2 .'/lib/js/';
+		$globals_css = ($use_ssl?$config['ssl_url']:$config['root_url']). '/modules/'. LISTIT2 .'/lib/css/';
+        $admindir = $config['admin_url'];
+        $userkey = get_secure_param();
+        $jqueryui = '';
+        if (version_compare(CMS_VERSION, '1.11-alpha0') < 0) {
+            $jqueryui = '<link type="text/css" rel="stylesheet" href="'. $moduledir .'/css/jquery-ui-1.8.2.custom.css"></link>';
+        }
+
+        $tmpl = <<<EOT
+{$jqueryui}
+<link type="text/css" rel="stylesheet" href="{$moduledir}/css/colorbox.css" />
+<link type="text/css" rel="stylesheet" href="{$moduledir}/css/footable.core.min.css" />
+<link type="text/css" rel="stylesheet" href="{$globals_css}listit2-globals.css" />
+<link type="text/css" rel="stylesheet" href="{$moduledir}/css/backend.css" />
+<script type="text/javascript">
+<!--
+var CMS_ADMIN_DIR = '{$admindir}';
+var CMS_USER_KEY = '{$userkey}';
+var MODULE_NAME = '{$modulename}';
+-->
+</script>
+<script type="text/javascript" src="{$moduledir}/js/footable.js"></script>
+<script type="text/javascript" src="{$moduledir}/js/footable.filter.js"></script>
+<script type="text/javascript" src="{$moduledir}/js/footable.sort.js"></script>
+<script type="text/javascript" src="{$moduledir}/js/jquery.slug.js"></script>
+<script type="text/javascript" src="{$moduledir}/js/jquery.colorbox.js"></script>
+<script type="text/javascript" src="{$globals_js}listit2-globals.js"></script>
+<script type="text/javascript" src="{$moduledir}/js/listit2.js"></script>
+EOT;
+
+		$tmpl .= ListIt2FielddefOperations::GetHeaderHTML();
+		
+        return $tmpl;
+    }	
+
+	public function DoAction($name, $id, $params, $returnid='')
+	{
+		global $CMS_ADMIN_PAGE;
+		
+		$config = cmsms()->GetConfig();
+		$smarty = cmsms()->GetSmarty();
+		$db = cmsms()->GetDb();
+			
+		$this->LoadModuleHints($params);
+		
+		$smarty->assign_by_ref('mod', $this);
+		$smarty->assign('actionid', $id);
+		$smarty->assign('returnid', $returnid);
+		
+		cms_utils::set_app_data('listit2_instance', $this->GetName());
+		
+		if(cmsms()->is_frontend_request()) {
+			if(isset($params['id_hierarchy'])) {
+				
+				cms_utils::set_app_data('listit2_id_hierarchy', $params['id_hierarchy']);
+				
+				$category = $this->LoadCategoryByIdentifier('id_hierarchy', $params['id_hierarchy']);
+				$smarty->assign('category', $category);
+				$smarty->assign($this->GetName() . '_category', $category); // <- Alias for $category				
+			}				
+		}
+		
+		if($CMS_ADMIN_PAGE) {
+		
+			$themeObject = cms_utils::get_theme_object();
+			$smarty->assign_by_ref('themeObject', $themeObject);		
+		}	
+	
+		if ($name != '') {
+	
+			$got_contents = false;
+			$contents = '';		
+			$name = preg_replace('/[^A-Za-z0-9\-_+]/', '', $name);
+
+			if($CMS_ADMIN_PAGE)
+				$contents .= '<div class="listit2-admin-wrapper">';
+			
+			// Check if we have action in this
+			$filename = $this->GetModulePath() . '/action.' . $name . '.php';
+			if (@is_file($filename) && !$got_contents) {
+						
+				ob_start();	
+				include($filename);
+				$contents .= ob_get_contents();
+				ob_end_clean();
+
+				$got_contents = true;				
+			}			
+			
+			// Check parent if we don't
+			$filename = $this->GetParentPath() . '/action.' . $name . '.php';
+			if (@is_file($filename) && !$got_contents) {
+						
+				ob_start();	
+				include($filename);
+				$contents .= ob_get_contents();
+				ob_end_clean();	
+				
+				$got_contents = true;				
+			}
+			
+			if($CMS_ADMIN_PAGE)
+				$contents .= '</div>';
+
+			echo $contents;			
+		}
+	}
+	
+	function Upgrade($oldversion, $newversion)
+	{
+		$config = cmsms()->GetConfig();
+		$smarty = cmsms()->GetSmarty();
+		$db = cmsms()->GetDb();
+		
+		$response = FALSE;
+		
+		$filename = $this->GetParentPath() . '/method.upgradeGlobals.php';
+		if (@is_file($filename)) {
+			
+			$res = include($filename);
+			if($res == 1 || $res == '') $response = TRUE;
+		}
+		
+		$filename = $this->GetModulePath() . '/method.upgrade.php';
+		if (@is_file($filename)) {
+			
+			$res = include($filename);
+			if($res == 1 || $res == '') $response = TRUE;
+		}
+		
+		// Check if module in our own control tables yet
+		$query = "SELECT module_id FROM " . cms_db_prefix() . "module_listit2_instances WHERE module_name = ?";	
+		$modstatus = $db->GetOne($query, array($this->GetName()));
+		
+		if(!$modstatus) $this->RegisterModule();		
+	
+		return $response;
+	}	
+
+	function Install()
+	{
+		$config = cmsms()->GetConfig();
+		$smarty = cmsms()->GetSmarty();
+		$db = cmsms()->GetDb();
+		
+		$response = FALSE;
+		
+		$filename = $this->GetParentPath() . '/method.installGlobals.php';
+		if (@is_file($filename)) {
+			
+			$res = include($filename);
+			if($res == 1 || $res == '') {
+				$response = FALSE;
+			} else {
+				$response = $res;
+			}
+		}
+		
+		$filename = $this->GetModulePath() . '/method.install.php';
+		if (@is_file($filename)) {
+			
+			$res = include($filename);
+			if($res == 1 || $res == '') {
+				$response = FALSE;
+			} else {
+				$response = $res;
+			}
+		}
+		
+		if(!$response) {
+		
+			$this->RegisterModule();
+		}
+	
+		return $response;
+	}
+
+	function Uninstall()
+	{
+		$config = cmsms()->GetConfig();
+		$smarty = cmsms()->GetSmarty();
+		$db = cmsms()->GetDb();
+		
+		$response = FALSE;
+		
+		$filename = $this->GetParentPath() . '/method.uninstallGlobals.php';
+		if (@is_file($filename)) {
+			
+			$res = include($filename);
+			if($res == 1 || $res == '') {
+				$response = FALSE;
+			} else {
+				$response = $res;
+			}
+		}
+		
+		$filename = $this->GetModulePath() . '/method.uninstall.php';
+		if (@is_file($filename)) {
+			
+			$res = include($filename);
+			if($res == 1 || $res == '') {
+				$response = FALSE;
+			} else {
+				$response = $res;
+			}
+		}
+		
+		if(!$response) {
+		
+			$this->UnregisterModule();
+		}		
+	
+		return $response;
+	}	
+	
+	#---------------------
+	# Manipulation methods
+	#--------------------- 	
+	
+	public function ModLang()
+	{
+		$mod = cmsms()->GetModuleInstance(LISTIT2);
+		if(!is_object($mod)) 
+			throw new ListIt2Exception('Cannot retrive ListIt2 Object.');
+		
+		$mod->LoadLangMethods();
+
+		$args = func_get_args();
+		array_unshift($args,'');
+
+		$args[0] = &$mod;
+
+		return call_user_func_array('cms_module_Lang', $args);
+	}
+		
+	public function GetParentPath()
+	{
+		$config = cmsms()->GetConfig();
+		return cms_join_path($config['root_path'], 'modules', LISTIT2, 'framework');
+	}
+	
+	public function GetParentURLPath($use_ssl=false)
+	{
+		$config = cmsms()->GetConfig();
+		return ($use_ssl?$config['ssl_url']:$config['root_url']) . '/modules/' . LISTIT2 . '/framework';
+	}	
+	
+	#---------------------
+	# Instance methods
+	#--------------------- 		
+
+	final private function RegisterModule()
+	{
+		$db = cmsms()->GetDb();
+	
+		$query  = 'INSERT INTO ' . cms_db_prefix() . 'module_listit2_instances (module_name) VALUES (?)';
+		$result = $db->Execute($query, array($this->GetName()));
+		
+		if (!$result) die('FATAL SQL ERROR: ' . $db->ErrorMsg() . '<br/>QUERY: ' . $db->sql);
+		
+		return true;
+	}
+	
+	final private function UnregisterModule()
+	{
+		$db = cmsms()->GetDb();
+
+		$query = 'DELETE FROM ' . cms_db_prefix() . 'module_listit2_instances WHERE module_name = ?';
+		$result = $db->Execute($query, array($this->GetName()));
+		
+		if (!$result) die('FATAL SQL ERROR: ' . $db->ErrorMsg() . '<br/>QUERY: ' . $db->sql);
+		
+		return true;		
+	}	
+		
+} // end of class
+
+?>
