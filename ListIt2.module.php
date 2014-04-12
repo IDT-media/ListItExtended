@@ -313,7 +313,9 @@ EOT;
 	
 	public function ModLang()
 	{	
-		if(version_compare($CMS_VERSION, '1.99', '<')) {
+		global $CMS_VERSION;
+	
+		if(version_compare($CMS_VERSION, '1.99-alpha0', '<')) {
 	
 			$this->LoadLangMethods();
 
