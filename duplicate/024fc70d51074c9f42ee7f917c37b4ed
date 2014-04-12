@@ -485,14 +485,26 @@ EOT;
 		if(!is_object($mod)) 
 			throw new ListIt2Exception('Cannot retrive ListIt2 Object.');
 		
-		$mod->LoadLangMethods();
+		global $CMS_VERSION;
+		
+		if(version_compare($CMS_VERSION, '1.99-alpha0', '<')) {
+	
+			$mod->LoadLangMethods();
 
-		$args = func_get_args();
-		array_unshift($args,'');
+			$args = func_get_args();
+			array_unshift($args,'');
+			$args[0] = &$mod;
 
-		$args[0] = &$mod;
+			return call_user_func_array('cms_module_Lang', $args);	
+		}
+		else {
+	
+			$args = func_get_args();
+			array_unshift($args,'');
+			$args[0] = $mod->GetName();
 
-		return call_user_func_array('cms_module_Lang', $args);
+			return CmsLangOperations::lang_from_realm($args);
+		}
 	}
 		
 	public function GetParentPath()

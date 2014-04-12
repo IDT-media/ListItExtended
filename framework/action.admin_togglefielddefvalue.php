@@ -50,7 +50,7 @@ $result = $db->Execute($query, array($item_id, $fid));
 $query  = 'INSERT INTO ' . cms_db_prefix() . 'module_' . $this->_GetModuleAlias() . '_fieldval (item_id, fielddef_id, value) VALUES (?, ?, ?)';
 $result = $db->Execute($query, array($item_id, $fid, $value));
 
-$admintheme = cmsms()->get_variable('admintheme');
+$admintheme = cms_utils::get_theme_object();
 $json = new stdClass;
 
 if ($value) {

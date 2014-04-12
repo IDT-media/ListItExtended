@@ -12,7 +12,7 @@ $active = (bool)$params['approve'];
 $query = 'UPDATE ' . cms_db_prefix() . 'module_' . $this->_GetModuleAlias() . '_category SET active = ? WHERE category_id = ?';
 $db->Execute($query, array($active, $category_id));
 
-$admintheme = cmsms()->get_variable('admintheme');
+$admintheme = cms_utils::get_theme_object();
 $json = new stdClass;
 
 if ($active) {

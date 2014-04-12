@@ -12,7 +12,7 @@ $required = (bool)$params['require'];
 $query = 'UPDATE ' . cms_db_prefix() . 'module_' . $this->_GetModuleAlias() . '_fielddef SET required = ? WHERE fielddef_id = ?';
 $db->Execute($query, array($required, $fielddef_id));
 
-$admintheme = cmsms()->get_variable('admintheme');
+$admintheme = cms_utils::get_theme_object();
 $json = new stdClass;
 
 if ($required) {

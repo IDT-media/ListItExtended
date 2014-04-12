@@ -23,6 +23,9 @@ if (!is_object(cmsms())) exit;
 if (!$this->CheckPermission($this->_GetModuleAlias() . '_modify_item'))
 	return;
 
+// Get theme object
+$admintheme 		= cms_utils::get_theme_object();	
+	
 // Get prefs
 $show_categories = ListIt2FielddefOperations::TestExistanceByType($this, 'Categories');
 	

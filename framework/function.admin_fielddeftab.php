@@ -26,7 +26,6 @@ if (!is_object(cmsms())) exit;
 
 if (!$this->CheckPermission($this->_GetModuleAlias() . '_modify_option')) return;
 
-$admintheme = cmsms()->get_variable('admintheme');
 $fielddefs = $this->GetFieldDefs();
 
 foreach($fielddefs as $fielddef) {

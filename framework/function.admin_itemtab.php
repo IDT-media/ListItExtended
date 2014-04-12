@@ -37,8 +37,6 @@ if (!$this->CheckPermission($this->_GetModuleAlias() . '_modify_item'))
 # Check Preferences
 #---------------------
 
-$admintheme 		= cmsms()->get_variable('admintheme');
-
 $singular         	= $this->GetPreference('item_singular', '');
 $plural           	= $this->GetPreference('item_plural', '');
 $fields           	= explode(',', $this->GetPreference('item_cols', ''));

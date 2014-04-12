@@ -15,7 +15,7 @@ $db->Execute($query, array($active, $item_id));
 $handlers = ob_list_handlers(); 
 for ($cnt = 0; $cnt < sizeof($handlers); $cnt++) { ob_end_clean(); }
 
-$admintheme = cmsms()->get_variable('admintheme');
+$admintheme = cms_utils::get_theme_object();
 $json = new stdClass;
 
 if ($active) {

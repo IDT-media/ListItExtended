@@ -25,7 +25,6 @@
 if (!$this->CheckPermission($this->_GetModuleAlias() . '_modify_option'))
     return;
 	
-$admintheme = cmsms()->get_variable('admintheme');
 $templates = $this->ListTemplates();
 $items = array();
 $addlinks = array();

@@ -50,7 +50,7 @@ class listit2fd_Checkbox extends ListIt2FielddefBase
 	
 		$output = '<div class="init-ajax-toggle">';
 	
-		$admintheme = cmsms()->get_variable('admintheme');	
+		$admintheme = cms_utils::get_theme_object();
 		$mod = $this->GetModuleInstance(true);
 	
 		if ($this->GetValue("string")) {
