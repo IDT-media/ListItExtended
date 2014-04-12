@@ -376,6 +376,7 @@ EOT;
 	/**
 	 * List Modules
 	 * NOTE: listit2_utils::array_to_object() not called with purpose.
+	 * NOTE: Make this static method.
 	 * @internal
 	 * @return array of objects
 	 */		
