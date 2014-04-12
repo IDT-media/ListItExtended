@@ -21,7 +21,7 @@
 if (!is_object(cmsms())) exit;
 
 $GLOBALS['CMS_FORCE_MODULE_LOAD'] = 1;
-$themeObject = cmsms()->get_variable('admintheme');
+$themeObject = cms_utils::get_theme_object();
 
 #---------------------
 # Load modules

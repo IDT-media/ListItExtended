@@ -313,13 +313,11 @@ EOT;
 	
 	public function ModLang()
 	{
-		$this->LoadLangMethods();
+        $args = func_get_args();
+        array_unshift($args,'');
+        $args[0] = $this->GetName();
 
-		$args = func_get_args();
-		array_unshift($args,'');
-		$args[0] = &$this;
-
-		return call_user_func_array('cms_module_Lang', $args);
+        return CmsLangOperations::lang_from_realm($args);
 	}
 	
 	public function ModProcessTemplate($tpl_name)

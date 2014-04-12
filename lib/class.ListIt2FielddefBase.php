@@ -472,14 +472,11 @@ abstract class ListIt2FielddefBase implements ArrayAccess
 		if(!is_object($mod)) 
 			throw new ListIt2Exception('Could not retrive module instance from originator!'); // <- Send own missing lang string instead of failure?
 		
-		$mod->LoadLangMethods();
+        $args = func_get_args();
+        array_unshift($args,'');
+        $args[0] = $mod->GetName();
 
-		$args = func_get_args();
-		array_unshift($args,'');
-
-		$args[0] = &$mod;
-		
-		return call_user_func_array('cms_module_Lang', $args);
+        return CmsLangOperations::lang_from_realm($args);
 	}
 	
 } // end of class
