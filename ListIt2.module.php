@@ -312,12 +312,25 @@ EOT;
 	#--------------------- 
 	
 	public function ModLang()
-	{
-        $args = func_get_args();
-        array_unshift($args,'');
-        $args[0] = $this->GetName();
+	{	
+		if(version_compare($CMS_VERSION, '1.99', '<')) {
+	
+			$this->LoadLangMethods();
 
-        return CmsLangOperations::lang_from_realm($args);
+			$args = func_get_args();
+			array_unshift($args,'');
+			$args[0] = &$this;
+
+			return call_user_func_array('cms_module_Lang', $args);	
+		}
+		else {
+	
+			$args = func_get_args();
+			array_unshift($args,'');
+			$args[0] = $this->GetName();
+
+			return CmsLangOperations::lang_from_realm($args);
+		}
 	}
 	
 	public function ModProcessTemplate($tpl_name)
