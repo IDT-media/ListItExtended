@@ -4,7 +4,12 @@
 */
 
 if(is_object($modinstance)){
-    $module_name = $modinstance->GetName();
+    
+	$module_name = $modinstance->GetName();
+}
+else {
+
+	$module_name = LISTIT2;
 }
 /* -- end of do not edit ------------------------------------------------ */
 
