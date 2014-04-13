@@ -39,9 +39,13 @@ class ListIt2LangOperations
 {
 	private function __construct() {}
 
-	static final public function lang_from_realm($originator, $args)
+	static final public function lang_from_realm($originator, $args, $caller = FALSE)
 	{
 		global $CMS_VERSION;
+		
+		$instance_name = $originator;
+		if($caller)
+			$instance_name = $caller;		
 		
 		if(version_compare($CMS_VERSION, '1.99-alpha0', '<')) {
 	
@@ -52,16 +56,22 @@ class ListIt2LangOperations
 			$mod->LoadLangMethods();
 			array_unshift($args,'');
 			$args[0] = &$mod;
-
-			return call_user_func_array('cms_module_Lang', $args);	
+			
+			return self::clean_lang_string($instance_name, call_user_func_array('cms_module_Lang', $args));
 		}
 		else {
 	
 			array_unshift($args,'');
 			$args[0] = $originator;
 
-			return CmsLangOperations::lang_from_realm($args);
+			return self::clean_lang_string($instance_name, CmsLangOperations::lang_from_realm($args));
 		}	
+	}
+	
+	static final public function clean_lang_string($replace, $string)
+	{	
+		// All magic strings here, that should be replaced from lang strings.
+		return str_replace('::INSTANCE_NAME::', $replace, $string);
 	}
 	  	
 } // end of class

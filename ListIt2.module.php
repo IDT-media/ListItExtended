@@ -315,7 +315,7 @@ EOT;
 	{	
 		$args = func_get_args();
 	
-		return ListIt2LangOperations::lang_from_realm(LISTIT2, $args);
+		return ListIt2LangOperations::lang_from_realm(LISTIT2, $args, $this->GetName());
 	}
 	
 	public function ModProcessTemplate($tpl_name)
