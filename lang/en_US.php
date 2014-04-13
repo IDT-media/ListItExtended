@@ -355,8 +355,8 @@ $lang['eventhelp_PreRenderAction'] = "<p>".$lang['eventdesc_PreRenderAction']."<
 
 // module
 $lang['moddescription'] = 'ListItExtended allows you to create lists that you can display throughout your website.';
-$lang['postinstall'] = '::INSTANCE_NAME:: has successfully been installed';
-$lang['postuninstall'] = '::INSTANCE_NAME:: has successfully been uninstalled';
+$lang['postinstall'] = '--INSTANCE_NAME-- has successfully been installed';
+$lang['postuninstall'] = '--INSTANCE_NAME-- has successfully been uninstalled';
 
 // module help
 $lang['general'] = 'General';
@@ -376,8 +376,8 @@ $lang['help_general'] = '<h3>General Info</h3>
 	
 $lang['help_usage'] = '<h3>Usage</h3>    
        
-    <p>You can configure ::INSTANCE_NAME:: here: Content &raquo; ::INSTANCE_NAME::</p>
-    <p>Place this tag in your page: {::INSTANCE_NAME::}</p><br />';
+    <p>You can configure --INSTANCE_NAME-- here: Content &raquo; --INSTANCE_NAME--</p>
+    <p>Place this tag in your page: {--INSTANCE_NAME--}</p><br />';
 	
 $lang['help_usage_options'] = 'After installing the module the next thing to do is set the options.                 
     <ol>                    
@@ -406,12 +406,12 @@ $lang['help_usage_items'] = 'Now we move on to the item list itself. In this exa
 $lang['help_permissions'] = '<h3>Permissions</h3>
     <p>You can specify the following permissions under Users &amp; Groups &rarr; Group Permissions</p>
     <ul>
-        <li>::INSTANCE_NAME::: Modify Items</li>
-        <li>::INSTANCE_NAME::: Modify all items</li>
-        <li>::INSTANCE_NAME::: Remove items</li>
-        <li>::INSTANCE_NAME::: Approve items</li>
-        <li>::INSTANCE_NAME::: Modify Categories</li>
-        <li>::INSTANCE_NAME::: Modify Options</li>
+        <li>--INSTANCE_NAME--: Modify Items</li>
+        <li>--INSTANCE_NAME--: Modify all items</li>
+        <li>--INSTANCE_NAME--: Remove items</li>
+        <li>--INSTANCE_NAME--: Approve items</li>
+        <li>--INSTANCE_NAME--: Modify Categories</li>
+        <li>--INSTANCE_NAME--: Modify Options</li>
     </ul>
     <p>To allow non-admin users to upload files, please go to Extensions > GBFilePicker and tick that first checkbox "Show filemanagement options".</p>';
 	
@@ -485,12 +485,12 @@ $lang['help_categories'] = <<<EOT
     Templates for your next project.</p>
     <h4>Using Categories</h4>
     <p>For detailed usage and available parameters, have a look below at "Parameters" Help section</p>
-    <pre><code>{::INSTANCE_NAME:: action='category'}</code></pre>
+    <pre><code>{--INSTANCE_NAME-- action='category'}</code></pre>
 EOT;
 	
 $lang['help_templates'] = '<h3>Templates</h3>
     <p>If you are not sure what variables are available to use in your templates, try debugging:</p>
-    <p>{::INSTANCE_NAME:: debug=1}</p>
+    <p>{--INSTANCE_NAME-- debug=1}</p>
     <p>You can access any field directly when looping through items using its alias, for example, to if you created a field definition with an alias "position", you can do one of the following:</p>';
 
 $lang['help_duplicating'] = '<h3>Creating Module Instances</h3>

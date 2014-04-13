@@ -71,7 +71,7 @@ class ListIt2LangOperations
 	static final public function clean_lang_string($replace, $string)
 	{	
 		// All magic strings here, that should be replaced from lang strings.
-		return str_replace('::INSTANCE_NAME::', $replace, $string);
+		return str_replace('--INSTANCE_NAME--', $replace, $string);
 	}
 	  	
 } // end of class
