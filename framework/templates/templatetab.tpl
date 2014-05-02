@@ -5,10 +5,10 @@
 		<legend>{$mod->ModLang($section_lang)}</legend>
 
 		{if count($templates) > 0}
-		<table cellspacing="0" class="pagetable">
+		<table cellspacing="0" class="pagetable no-sorter">
 			<thead>
 				<tr>
-					<th>{$mod->ModLang('template')}</th>				
+					<th>{$mod->ModLang('template')}</th>
 					<th class="pageicon">{'default'|lang}</th>
 					<th class="pageicon">&nbsp;</th>
 					<th class="pageicon">&nbsp;</th>

@@ -22,6 +22,14 @@ function initTableSorter() {
             initAjaxEvents();
             
             $('.footable-row-detail-name:empty').hide();
+        },
+        // this sucks, but handling breakpoint class depending on window size due to invisible toggle button
+        'footable_resized' : function() {
+            if ($(window).innerWidth() < 1240) {
+                $('table#sortable_item').addClass('breakpoint');
+            } else {
+                $('table#sortable_item').removeClass('breakpoint');
+            }
         }
     });
 }
@@ -163,8 +171,25 @@ $(function($) {
         }, 9000);
     });
     
-    $('table#sortable_item').footable();
-
+    // initialize footable
+    $('table#sortable_item').footable({
+        breakpoints: {
+            phone: 380,
+            tablet: 940
+        }
+    });
+    
+    // handle breakpoint (quickfix when only title row is shown)
+    var $window = $(window),
+        $table = $('table#sortable_item');
+    
+    // this sucks, but handling breakpoint class depending on window size due to invisible toggle button
+    if ($(window).innerWidth() < 1240) {
+        $('table#sortable_item').addClass('breakpoint');
+    } else {
+        $('table#sortable_item').removeClass('breakpoint');
+    }
+    
     initSortable();
     initSelectAll();
     initDatepicker();

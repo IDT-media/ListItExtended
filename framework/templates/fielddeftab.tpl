@@ -1,6 +1,6 @@
 {if count($items) > 0}
 <div class="pageoptions">{$addlink}</div>
-<table id="sortable_fielddef" cellspacing="0" class="pagetable">
+<table id="sortable_fielddef" cellspacing="0" class="pagetable no-sorter">
     <thead>
         <tr>
             <th>{$mod->ModLang('fielddef')}</th>
