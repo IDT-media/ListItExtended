@@ -93,7 +93,7 @@ ul.listit2-column-list li {
 	list-style: none;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1240px) {
 	
 	table#sortable_item > thead th,
 	table#sortable_item > tbody td:first-child {
