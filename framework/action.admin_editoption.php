@@ -31,6 +31,8 @@
 if (!is_object(cmsms())) exit;
 if (!$this->CheckPermission($this->_GetModuleAlias(). '_modify_option')) return;
 
+global $CMS_VERSION;
+
 #---------------------
 # Error processing
 #---------------------

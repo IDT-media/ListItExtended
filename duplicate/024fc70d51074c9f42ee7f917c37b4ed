@@ -70,7 +70,7 @@ class 024fc70d51074c9f42ee7f917c37b4ed extends ListIt2
 
 	public function GetDependencies()
 	{
-		return array('ListIt2' => '1.4.1');
+		return array('ListIt2' => '1.4.2');
 	}
 	
 	public function VisibleToAdminUser()

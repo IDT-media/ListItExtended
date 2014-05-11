@@ -54,7 +54,7 @@ $csv_mimetypes = array(
     'application/txt',
 );
 
-$admintheme 		= cmsms()->get_variable('admintheme');
+$admintheme 		= cms_utils::get_theme_object();	
 $dest_path 			= cms_join_path(TMP_CACHE_LOCATION, $this->GetName() . '_CSV_FILE.csv');
 $file_values		= array();
 $template 			= 'admin_csv_import_export.tpl';
