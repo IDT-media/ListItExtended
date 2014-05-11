@@ -37,30 +37,20 @@ if (!$this->CheckPermission($this->_GetModuleAlias(). '_modify_option')) return;
 
 $errors = array();
 
-if(empty($params['url_prefix'])) {
-
+if(empty($params['url_prefix'])) 
 	$errors[] = $this->ModLang('error_optionrequired', $this->ModLang('prompt_url_prefix'));
-}
 
-if(empty($params['friendlyname'])) {
-
+if(empty($params['friendlyname'])) 
 	$errors[] = $this->ModLang('error_optionrequired', $this->ModLang('prompt_friendlyname'));
-}
 
-if(empty($params['item_title'])) {
-
+if(empty($params['item_title'])) 
 	$errors[] = $this->ModLang('error_optionrequired', $this->ModLang('prompt_item_title'));
-}
 
-if(empty($params['item_singular'])) {
-
+if(empty($params['item_singular'])) 
 	$errors[] = $this->ModLang('error_optionrequired', $this->ModLang('prompt_item_singular'));
-}
 
-if(empty($params['item_plural'])) {
-
+if(empty($params['item_plural'])) 
 	$errors[] = $this->ModLang('error_optionrequired', $this->ModLang('prompt_item_plural'));
-}
 
 if(count($errors)) {
 
@@ -92,6 +82,23 @@ $this->SetPreference('summarypage',			$params['summarypage'] >= 0 ? $params['sum
 
 // Cross Module options
 $this->SetPreference('reindex_search',		(isset($params['reindex_search'])?1:0));
+
+#---------------------
+# Clear admin cache
+#---------------------
+
+if(version_compare($CMS_VERSION, '1.99-alpha0', '<')) {
+
+	foreach (glob(cms_join_path(TMP_CACHE_LOCATION, "themeinfo*.cache")) as $filename) { @unlink($filename); }
+}
+else {
+
+	foreach (glob(cms_join_path(TMP_CACHE_LOCATION, "cache*.cms")) as $filename) { @unlink($filename); }
+}
+
+#---------------------
+# Go back
+#---------------------
 
 $params = array('message' => 'changessaved', 'active_tab' => 'optiontab');
 $this->Redirect($id, 'defaultadmin', '', $params);
