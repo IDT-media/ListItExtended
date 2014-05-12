@@ -21,16 +21,20 @@
 					callback: function () {
 					
 						// Init GeoCoder
-						var geocoder = new google.maps.Geocoder();
+						var geocoder = new google.maps.Geocoder(),
+							address = $('[name="m1_customfield[2]"]').val(); // change to smarty name attrribute value
 					
 						// Marker setup
-						geocoder.geocode({ 'address' : '{$fielddef->Address()}' }, function(results, status) {
+						geocoder.geocode({ 'address' : address }, function(results, status) {
 													
 							if(status === google.maps.GeocoderStatus.OK) {
+								//console.log(results);
+
+								var lat = results[0].geometry.location.lat(),
+									lng = results[0].geometry.location.lng();
 											
-								$("#{$actionid}customfield_{$fielddef->GetId()}_lat").val(results[0].geometry.location.d);
-								$("#{$actionid}customfield_{$fielddef->GetId()}_lon").val(results[0].geometry.location.e);
-								console.log(results[0].geometry.location);
+								$("#{$actionid}customfield_{$fielddef->GetId()}_lat").val(lat);
+								$("#{$actionid}customfield_{$fielddef->GetId()}_lon").val(lng);
 							}							
 						});					
 					}
