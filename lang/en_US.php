@@ -122,6 +122,8 @@ $lang['fielddef_MultiSelect'] = 'Multi Select';
 $lang['fielddef_CheckboxGroup'] = 'Checkbox Group';
 // File Upload
 $lang['fielddef_FileUpload'] = 'File Upload';
+// ColorPicker
+$lang['fielddef_ColorPicker'] = 'Color Picker';
 
 /* Instructions */
 $lang['fielddef_allow_help'] = 'Specify a comma seprated list of file extensions that are allowed. For example: pdf,gif,jpeg,jpg (keep lowercase)';
