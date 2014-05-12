@@ -78,9 +78,14 @@ class ListIt2FielddefOperations
 		}		
 		
 		// Register fielddefs
+		$registered_types = array();
 		foreach($scanned_fielddefs as $mod_name=>$mod_defs) {
 		
 			foreach($mod_defs as $type=>$path) {
+			
+				// Can have more than one per type.
+				if(in_array($type, $registered_types))
+					continue;
 
 				$disabled = false;
 			
@@ -125,7 +130,9 @@ class ListIt2FielddefOperations
 				else {
 					
 					unset($fielddefs[$type]);
-				}				
+				}	
+
+				$registered_types[] = $type;
 			}
 		}
 			
