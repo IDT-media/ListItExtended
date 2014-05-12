@@ -28,8 +28,8 @@
 													
 							if(status === google.maps.GeocoderStatus.OK) {
 											
-								$("#{$actionid}customfield_{$fielddef->GetId()}_lat").val(results[0].geometry.location.d);
-								$("#{$actionid}customfield_{$fielddef->GetId()}_lon").val(results[0].geometry.location.e);
+								$("#{$actionid}customfield_{$fielddef->GetId()}_lat").val(results[0].geometry.location.lat());
+								$("#{$actionid}customfield_{$fielddef->GetId()}_lon").val(results[0].geometry.location.lng());
 								console.log(results[0].geometry.location);
 							}							
 						});					
