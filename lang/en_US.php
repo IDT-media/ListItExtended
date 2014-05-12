@@ -124,6 +124,8 @@ $lang['fielddef_CheckboxGroup'] = 'Checkbox Group';
 $lang['fielddef_FileUpload'] = 'File Upload';
 // ColorPicker
 $lang['fielddef_ColorPicker'] = 'Color Picker';
+// GeoCoder
+$lang['fielddef_GeoCoder'] = 'Geocoder';
 
 /* Instructions */
 $lang['fielddef_allow_help'] = 'Specify a comma seprated list of file extensions that are allowed. For example: pdf,gif,jpeg,jpg (keep lowercase)';
