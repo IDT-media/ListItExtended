@@ -66,7 +66,7 @@ if(!empty($fielddef_id)) {
 // Load fielddef from type
 elseif(!empty($type)) {
 
-	$fielddef_obj = ListIt2FielddefOperations::LoadFielddefByType($type);
+	$fielddef_obj = ListIt2FielddefOperations::LoadFielddefByType($type, $this);
 }
 
 #---------------------

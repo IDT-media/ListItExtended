@@ -37,7 +37,15 @@ class listit2fd_GeoCoder extends ListIt2FielddefBase
 		$this->SetFriendlyType($this->ModLang('fielddef_'.$this->GetType()));
 	}
 	
-	public function Siblings()
+	public function RenderForEdit($id, $returnid)
+	{
+		$smarty = cmsms()->GetSmarty();		
+		$smarty->assign('instanceFields', $this->_GetInstanceFields());	
+				
+		return parent::RenderForEdit($id, $returnid);
+	}	
+	
+	private function _GetInstanceFields()
 	{
 		$caller = $this->GetModuleInstance(true);		
 		$all_fields = $caller->GetFieldDefs();
@@ -53,17 +61,6 @@ class listit2fd_GeoCoder extends ListIt2FielddefBase
 		
 		return $output;
 	}
-	
-	public function Address()
-	{	
-		foreach($this->GetParentArray() as $field) {
 		
-			if($field->GetId() == $this->GetOptionValue('address_field'))
-				return $field->GetValue(self::TYPE_STRING);
-		}
-
-		return null;
-	}
-	
 } // end of class
 ?>

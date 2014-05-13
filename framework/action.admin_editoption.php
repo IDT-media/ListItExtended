@@ -31,8 +31,6 @@
 if (!is_object(cmsms())) exit;
 if (!$this->CheckPermission($this->_GetModuleAlias(). '_modify_option')) return;
 
-global $CMS_VERSION;
-
 #---------------------
 # Error processing
 #---------------------
@@ -89,7 +87,7 @@ $this->SetPreference('reindex_search',		(isset($params['reindex_search'])?1:0));
 # Clear admin cache
 #---------------------
 
-if(version_compare($CMS_VERSION, '1.99-alpha0', '<')) {
+if(version_compare(CMS_VERSION, '1.99-alpha0', '<')) {
 
 	foreach (glob(cms_join_path(TMP_CACHE_LOCATION, "themeinfo*.cache")) as $filename) { @unlink($filename); }
 }

@@ -94,6 +94,7 @@ $lang['status_optional'] = 'Set status to \'optional\'';
 $lang['is_default'] = 'Is set to \'Default\'';
 $lang['status_default'] = 'Set to \'Default\'';
 $lang['helptext_title'] = 'Possible Field Definition instructions for Extra field:';
+$lang['address_field'] = 'Address Field';
 
 // TextInput
 $lang['fielddef_TextInput'] = 'Text Input';
@@ -125,7 +126,7 @@ $lang['fielddef_FileUpload'] = 'File Upload';
 // ColorPicker
 $lang['fielddef_ColorPicker'] = 'Color Picker';
 // GeoCoder
-$lang['fielddef_GeoCoder'] = 'Geocoder';
+$lang['fielddef_GeoCoder'] = 'GeoCoder';
 
 /* Instructions */
 $lang['fielddef_allow_help'] = 'Specify a comma seprated list of file extensions that are allowed. For example: pdf,gif,jpeg,jpg (keep lowercase)';
@@ -149,6 +150,7 @@ $lang['fielddef_showall_help'] = 'Show all, regardless of system permissions.';
 $lang['fielddef_columns_help'] = 'Number of columns. Divide this field into multiple columns for a better user experience.';
 $lang['fielddef_media_type_help'] = 'Allows you to specify images as media type to be displayed. By default all files will be shown.';
 $lang['fielddef_enable_jqui_help'] = 'Enhances standard form elements to themeable buttons with appropriate hover and active styles.';
+$lang['fielddef_address_field_help'] = 'Field for lat/lon lookup.';
 
 // category
 $lang['reorder_categories'] = 'Reorder Categories';
