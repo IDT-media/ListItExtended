@@ -267,11 +267,12 @@ class 024fc70d51074c9f42ee7f917c37b4ed extends ListIt2
         if (version_compare(CMS_VERSION, '1.11-alpha0') < 0) {
             $jqueryui = '<link type="text/css" rel="stylesheet" href="'. $moduledir .'/css/jquery-ui-1.8.2.custom.css"></link>';
         }
-
+		
         $tmpl = <<<EOT
 {$jqueryui}
 <link type="text/css" rel="stylesheet" href="{$moduledir}/css/colorbox.css" />
 <link type="text/css" rel="stylesheet" href="{$moduledir}/css/footable.core.min.css" />
+<link type="text/css" rel="stylesheet" href="{$moduledir}/css//jquery-ui-timepicker-addon.css" />
 <link type="text/css" rel="stylesheet" href="{$globals_css}listit2-globals.css" />
 <link type="text/css" rel="stylesheet" href="{$moduledir}/css/backend.css" />
 <script type="text/javascript">
@@ -286,6 +287,7 @@ var MODULE_NAME = '{$modulename}';
 <script type="text/javascript" src="{$moduledir}/js/footable.sort.js"></script>
 <script type="text/javascript" src="{$moduledir}/js/jquery.slug.js"></script>
 <script type="text/javascript" src="{$moduledir}/js/jquery.colorbox.js"></script>
+<script type="text/javascript" src="{$moduledir}/js/jquery-ui-timepicker-addon.js"></script>	
 <script type="text/javascript" src="{$globals_js}listit2-globals.js"></script>
 <script type="text/javascript" src="{$moduledir}/js/listit2.js"></script>
 EOT;

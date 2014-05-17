@@ -36,16 +36,7 @@ class listit2fd_SelectDateTime extends ListIt2FielddefBase
 		
 		$this->SetFriendlyType($this->ModLang('fielddef_'.$this->GetType()));
 	}
-	
-	public function GetHeaderHTML()
-	{
-        $tmpl = <<<EOT
-<link type="text/css" rel="stylesheet" href="{$this->GetURLPath()}/jqeury-ui-timepicker-addon.css" />
-<script type="text/javascript" src="{$this->GetURLPath()}/jquery-ui-timepicker-addon.js"></script>
-EOT;
-		return $tmpl;
-	}
-	
+		
 	public function FormatTypes()
 	{
 		return array(
