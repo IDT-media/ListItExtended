@@ -37,8 +37,8 @@ $fields = '
     active I4,
     create_time DT,
 	modified_time DT,
-	start_time D,
-	end_time D,
+	start_time DT,
+	end_time DT,
 	key1 C(50),
 	key2 C(50),
 	key3 C(50),
@@ -127,7 +127,7 @@ if( file_exists( $fn ) ) {
 	$this->SetTemplate('summary_default', $template);
 	$this->SetPreference($this->_GetModuleAlias() . '_default_summary_template', 'default');
 }
-
+/*
 $fn = cms_join_path(LISTIT2_TEMPLATE_PATH, 'fe_summary_categorized.tpl');
 if( file_exists( $fn ) ) {
     $template = @file_get_contents($fn);
@@ -139,6 +139,7 @@ if( file_exists( $fn ) ) {
     $template = @file_get_contents($fn);
 	$this->SetTemplate('summary_accordion', $template);
 }
+*/
 
 $fn = cms_join_path(LISTIT2_TEMPLATE_PATH, 'fe_summary_searchresults.tpl');
 if( file_exists( $fn ) ) {
@@ -213,12 +214,12 @@ $this->SetPreference('item_title', utf8_encode(html_entity_decode($this->ModLang
 # Permissions
 #---------------------
 
-$this->CreatePermission($this->_GetModuleAlias() . '_modify_item', $this->_GetModuleAlias() . ': Modify Items');
-$this->CreatePermission($this->_GetModuleAlias() . '_modify_category', $this->_GetModuleAlias() . ': Modify Categories');
-$this->CreatePermission($this->_GetModuleAlias() . '_modify_option', $this->_GetModuleAlias() . ': Modify Options');
-$this->CreatePermission($this->_GetModuleAlias() . '_remove_item', $this->_GetModuleAlias() . ': Remove items');
-$this->CreatePermission($this->_GetModuleAlias() . '_approve_item', $this->_GetModuleAlias() . ': Approve items');
-$this->CreatePermission($this->_GetModuleAlias() . '_modify_all_item', $this->_GetModuleAlias() . ': Modify all items');
+$this->CreatePermission($this->_GetModuleAlias() . '_modify_item', $this->GetName() . ': Modify Items');
+$this->CreatePermission($this->_GetModuleAlias() . '_modify_category', $this->GetName() . ': Modify Categories');
+$this->CreatePermission($this->_GetModuleAlias() . '_modify_option', $this->GetName() . ': Modify Options');
+$this->CreatePermission($this->_GetModuleAlias() . '_remove_item', $this->GetName() . ': Remove items');
+$this->CreatePermission($this->_GetModuleAlias() . '_approve_item', $this->GetName() . ': Approve items');
+$this->CreatePermission($this->_GetModuleAlias() . '_modify_all_item', $this->GetName() . ': Modify all items');
 
 #---------------------
 # Events

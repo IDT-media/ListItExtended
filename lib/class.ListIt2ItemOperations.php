@@ -67,8 +67,8 @@ class ListIt2ItemOperations
 	
 		//$time = $db->DBTimeStamp(time());
 
-		$sql_start_time = $obj->start_time ? date('Y-m-d', strtotime($obj->start_time)) : NULL;
-		$sql_end_time = $obj->end_time ? date('Y-m-d', strtotime($obj->end_time)) : NULL;		
+		$sql_start_time = $obj->start_time ? date('Y-m-d H:i:s', strtotime($obj->start_time)) : NULL;
+		$sql_end_time = $obj->end_time ? date('Y-m-d H:i:s', strtotime($obj->end_time)) : NULL;		
 		
 		// Ensure that we have alias
 		if ($obj->alias == ''){

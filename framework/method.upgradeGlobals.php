@@ -251,3 +251,11 @@ if( version_compare($oldversion, '1.4.1') < 0 ) {
 	}
 
 } // end of 1.4 -> 1.4.1 upgrade
+
+if( version_compare($oldversion, '1.4.2') < 0 ) {
+	
+	// Modify database
+	$db->Execute('ALTER TABLE ' . cms_db_prefix() . 'module_' . $this->_GetModuleAlias() . '_item MODIFY start_time DATETIME');
+	$db->Execute('ALTER TABLE ' . cms_db_prefix() . 'module_' . $this->_GetModuleAlias() . '_item MODIFY end_time DATETIME');
+
+} // end of 1.4.1 -> 1.4.2 upgrade
