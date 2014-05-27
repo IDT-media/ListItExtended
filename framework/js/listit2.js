@@ -38,7 +38,7 @@ function initDatepicker() {
     $('#m1_start_time, #m1_end_time')
 		.datetimepicker({
 			dateFormat: 'yy-mm-dd',
-			timeFormat: 'HH:mm',
+			timeFormat: 'HH:mm:ss',
 			hourGrid: 4,
 			minuteGrid: 10,
 			secondGrid: 10

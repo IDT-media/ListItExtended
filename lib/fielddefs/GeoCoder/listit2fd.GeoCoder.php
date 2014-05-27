@@ -30,9 +30,9 @@
 
 class listit2fd_GeoCoder extends ListIt2FielddefBase
 {
-	public function __construct(&$db_info, $caller_object) 
+	public function __construct(&$db_info, $caller) 
 	{	
-		parent::__construct($db_info, $caller_object);
+		parent::__construct($db_info, $caller);
 		
 		$this->SetFriendlyType($this->ModLang('fielddef_'.$this->GetType()));
 	}
@@ -45,6 +45,21 @@ class listit2fd_GeoCoder extends ListIt2FielddefBase
 		return parent::RenderForEdit($id, $returnid);
 	}	
 	
+	public function Validate(&$errors) 
+	{
+		$value_valid = true;
+		foreach($this->GetValue() as $value) {
+		
+			if(empty($value))
+				$value_valid = false;
+		}
+		
+		if(!$value_valid && $this->IsRequired()) {
+	
+			$errors[] = $this->ModLang('required_field_empty') . ' (' . $this->GetName() . ')';
+		}
+	}	
+		
 	private function _GetInstanceFields()
 	{
 		$caller = $this->GetModuleInstance(true);		

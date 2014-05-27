@@ -3,8 +3,8 @@
 	<div class="pageinput">
 		{if $fielddef->GetDesc()}({$fielddef->GetDesc()})<br />{/if}
 		{$fld_value = $fielddef->GetValue("array")}
-		<label>Lat:</label>&nbsp;<input type="text" name="{$actionid}customfield[{$fielddef->GetId()}][]" id="{$actionid}customfield_{$fielddef->GetId()}_lat" value="{$fld_value[0]}" size="{$fielddef->GetOptionValue('size')}" />
-		<label>Lon:</label>&nbsp;<input type="text" name="{$actionid}customfield[{$fielddef->GetId()}][]" id="{$actionid}customfield_{$fielddef->GetId()}_lon" value="{$fld_value[1]}" size="{$fielddef->GetOptionValue('size')}" />
+		<label>Lat:</label>&nbsp;<input type="text" name="{$actionid}customfield[{$fielddef->GetId()}][]" id="{$actionid}customfield_{$fielddef->GetId()}_lat" value="{$fld_value[0]|default:''}" size="{$fielddef->GetOptionValue('size')}" />
+		<label>Lon:</label>&nbsp;<input type="text" name="{$actionid}customfield[{$fielddef->GetId()}][]" id="{$actionid}customfield_{$fielddef->GetId()}_lon" value="{$fld_value[1]|default:''}" size="{$fielddef->GetOptionValue('size')}" />
 		<button id="{$actionid}customfield_{$fielddef->GetId()}_lookup">Lookup</button>
 	</div>
 	

@@ -426,6 +426,7 @@ abstract class ListIt2FielddefBase implements ArrayAccess
 	  NOTICE: Highly experimental
 	************************************/
 	
+	// This method will be moved out from API, system will initiate everything via event handler class file.
 	// Should i make this final or not, lets leave it like this for now.
 	public function EventHandler()
 	{
