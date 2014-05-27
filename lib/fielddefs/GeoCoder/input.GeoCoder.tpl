@@ -41,6 +41,11 @@
 			});		
 	
 			e.preventDefault();
+		}).button({
+		
+			icons: {
+				primary: 'ui-icon-search'
+			}
 		});
 	});
 	</script>
