@@ -272,7 +272,7 @@ class 024fc70d51074c9f42ee7f917c37b4ed extends ListIt2
 {$jqueryui}
 <link type="text/css" rel="stylesheet" href="{$moduledir}/css/colorbox.css" />
 <link type="text/css" rel="stylesheet" href="{$moduledir}/css/footable.core.min.css" />
-<link type="text/css" rel="stylesheet" href="{$moduledir}/css//jquery-ui-timepicker-addon.css" />
+<link type="text/css" rel="stylesheet" href="{$moduledir}/css/jquery-ui-timepicker-addon.css" />
 <link type="text/css" rel="stylesheet" href="{$globals_css}listit2-globals.css" />
 <link type="text/css" rel="stylesheet" href="{$moduledir}/css/backend.css" />
 <script type="text/javascript">
