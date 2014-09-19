@@ -225,7 +225,7 @@ class ListIt2ItemQuery extends ListIt2Query
 		
 			if(!empty($params['search_'.$fielddef->GetAlias()])) {
 			
-				$thisparam = $params['search_'.$fielddef->GetAlias()];
+				$thisparam = explode(',', $params['search_'.$fielddef->GetAlias()]);
 				$this->AppendTo(parent::VARTYPE_QPARAMS, $fielddef->GetAlias());
 				
 				$thisor = array();
