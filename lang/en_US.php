@@ -127,6 +127,12 @@ $lang['fielddef_FileUpload'] = 'File Upload';
 $lang['fielddef_ColorPicker'] = 'Color Picker';
 // GeoCoder
 $lang['fielddef_GeoCoder'] = 'GeoCoder';
+// TagIt
+$lang['fielddef_TagIt'] = 'TagIt';
+$lang['remove_confirmation'] = 'Remove confirmation';
+$lang['fielddef_remove_confirmation_help'] = 'If checked item removal reqruires two backspace clicks.';
+$lang['allow_spaces'] = 'Allow spaces';
+$lang['fielddef_allow_spaces_help'] = 'Allow spaces.';
 
 /* Instructions */
 $lang['fielddef_allow_help'] = 'Specify a comma seprated list of file extensions that are allowed. For example: pdf,gif,jpeg,jpg (keep lowercase)';
@@ -151,6 +157,7 @@ $lang['fielddef_columns_help'] = 'Number of columns. Divide this field into mult
 $lang['fielddef_media_type_help'] = 'Allows you to specify images as media type to be displayed. By default all files will be shown.';
 $lang['fielddef_enable_jqui_help'] = 'Enhances standard form elements to themeable buttons with appropriate hover and active styles.';
 $lang['fielddef_address_field_help'] = 'Field for lat/lon lookup.';
+$lang['fielddef_limit_help'] = 'Specify limit of items allowed in this field.';
 
 // category
 $lang['reorder_categories'] = 'Reorder Categories';
@@ -284,6 +291,7 @@ $lang['subtype'] = 'Sub Type';
 $lang['showall'] = 'Show All';
 $lang['columns'] = 'Columns';
 $lang['owner'] = 'Owner';
+$lang['limit'] = 'Limit';
 
 // csv import/export
 $lang['filename'] = 'File name';
