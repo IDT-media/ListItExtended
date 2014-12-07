@@ -769,7 +769,7 @@ EOT;
 					$string_array[] = $params['id_hierarchy'];				
 
 				// Pagelimit stuff, won't work together with hierarchy stuff.
-				if(isset($params['pagelimit'])) {
+				if(isset($params['pagelimit']) && isset($params['pagenumber'])) {
 				
 					$string_array[] = 'page';
 					$string_array[] = $params['pagenumber'];
