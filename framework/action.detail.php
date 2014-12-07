@@ -73,6 +73,7 @@ $item = $this->LoadItemByIdentifier($identifier, $params['item']);
 $smarty->assign('item', $item);
 $smarty->assign($this->GetName() . '_item', $item); // <- Alias for $item
 
+listit2_utils::clean_params($params, array('returnid', 'item'));
 $smarty->assign('return_url', $this->CreatePrettyLink($id, 'default', $summarypage, '', $params, '', true));
 $smarty->assign('return_link', $this->CreatePrettyLink($id, 'default', $summarypage, $this->ModLang('return_url'), $params)); 
 

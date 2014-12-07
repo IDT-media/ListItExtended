@@ -121,6 +121,7 @@ while($result && $row = $result->FetchRow()) {
 
 $pagenumber = $item_query->GetPageNumber();
 $pagecount = $item_query->GetPageCount();
+$urlset = new stdClass();
 
 // Assign some pagination variables to smarty
 if($pagenumber == 1) {
@@ -129,12 +130,19 @@ if($pagenumber == 1) {
 	$smarty->assign('firstpage',$this->ModLang('firstpage'));
 } else {
 
+	$urlset->prev = new stdClass();
 	$params['pagenumber'] = $pagenumber-1;
 	$smarty->assign('prevpage', $this->CreatePrettyLink($id, 'default', $summarypage, $this->ModLang('prevpage'),$params, '', false, $inline));
 	$smarty->assign('prevurl', $this->CreatePrettyLink($id, 'default', $summarypage,'', $params, '', true, $inline));
+	$urlset->prev->url = $this->CreatePrettyLink($id, 'default', $summarypage,'', $params, '', true, $inline);
+	$urlset->prev->raw = $this->CreateLink($id, 'default', $summarypage,'', $params, '', true, $inline);
+	
+	$urlset->first = new stdClass();
 	$params['pagenumber'] = 1;
 	$smarty->assign('firstpage', $this->CreatePrettyLink($id, 'default', $summarypage, $this->ModLang('firstpage'),$params, '', false, $inline));
 	$smarty->assign('firsturl', $this->CreatePrettyLink($id, 'default', $summarypage,'', $params, '', true, $inline));
+	$urlset->first->url = $this->CreatePrettyLink($id, 'default', $summarypage,'', $params, '', true, $inline);
+	$urlset->first->raw = $this->CreateLink($id, 'default', $summarypage,'', $params, '', true, $inline);
 }
 
 if($pagenumber >= $pagecount) {
@@ -143,14 +151,22 @@ if($pagenumber >= $pagecount) {
 	$smarty->assign('lastpage',$this->ModLang('lastpage'));
 } else {
 
+	$urlset->next = new stdClass();
 	$params['pagenumber'] = $pagenumber+1;
 	$smarty->assign('nextpage', $this->CreatePrettyLink($id, 'default', $summarypage, $this->ModLang('nextpage'), $params, '', false, $inline));
 	$smarty->assign('nexturl', $this->CreatePrettyLink($id, 'default', $summarypage, '', $params, '', true, $inline));
+	$urlset->next->url = $this->CreatePrettyLink($id, 'default', $summarypage,'', $params, '', true, $inline);
+	$urlset->next->raw = $this->CreateLink($id, 'default', $summarypage,'', $params, '', true, $inline);
+	
+	$urlset->last = new stdClass();
 	$params['pagenumber']=$pagecount;
 	$smarty->assign('lastpage', $this->CreatePrettyLink($id, 'default', $summarypage, $this->ModLang('lastpage'), $params, '', false, $inline));
 	$smarty->assign('lasturl', $this->CreatePrettyLink($id, 'default', $summarypage, '', $params, '', true, $inline));
+	$urlset->last->url = $this->CreatePrettyLink($id, 'default', $summarypage,'', $params, '', true, $inline);
+	$urlset->last->raw = $this->CreateLink($id, 'default', $summarypage,'', $params, '', true, $inline);	
 }
 
+$smarty->assign('urlset',$urlset);
 $smarty->assign('pagenumber',$pagenumber);
 $smarty->assign('pagecount',$pagecount);
 
@@ -162,6 +178,7 @@ while($pagecount) {
 	$params['pagenumber'] = $pagecount;
 	$obj->link = $this->CreatePrettyLink($id, 'default', $summarypage, $pagecount, $params, '', false, $inline);
 	$obj->url = $this->CreatePrettyLink($id, 'default', $summarypage, '', $params, '', true, $inline);
+	$obj->raw = $this->CreateLink($id, 'default', $summarypage, '', $params, '', true, $inline);
 	
 	$pagelinks[$pagecount] = $obj;
 	$pagecount--;
